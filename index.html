@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>💕 Sofía - San Valentín Fitness</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:wght@300;400;600;700&display=swap');
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            overflow-x: hidden;
+        }
+
+        h1, h2 {
+            font-family: 'Pacifico', cursive;
+        }
+
+        /* Animación de corazones flotantes */
+        @keyframes float {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        .heart-float {
+            position: fixed;
+            animation: float linear infinite;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        /* Animación de mancuernas */
+        @keyframes lift {
+            0%, 100% { transform: translateY(0) rotate(-15deg); }
+            50% { transform: translateY(-20px) rotate(15deg); }
+        }
+
+        .dumbbell-float {
+            position: fixed;
+            animation: lift 3s ease-in-out infinite;
+            pointer-events: none;
+            z-index: 1;
+            opacity: 0.3;
+        }
+
+        /* Pulso romántico */
+        @keyframes pulse-heart {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.15); }
+        }
+
+        .pulse-heart {
+            animation: pulse-heart 1.5s ease-in-out infinite;
+        }
+
+        /* Bounce suave */
+        @keyframes bounce-soft {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
+        }
+
+        .bounce-soft {
+            animation: bounce-soft 2s ease-in-out infinite;
+        }
+
+        /* Gradiente animado de fondo */
+        @keyframes gradient-shift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .animated-gradient {
+            background: linear-gradient(-45deg, #ff6b9d, #c44569, #ff5e7e, #ff9a9e);
+            background-size: 400% 400%;
+            animation: gradient-shift 8s ease infinite;
+        }
+
+        /* Brillo en los botones */
+        @keyframes shine {
+            0% { background-position: -200%; }
+            100% { background-position: 200%; }
+        }
+
+        .btn-shine {
+            background-size: 200%;
+            animation: shine 3s linear infinite;
+        }
+
+        /* Partículas flotantes */
+        @keyframes particle-float {
+            0% {
+                transform: translateY(0) translateX(0) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.5;
+            }
+            90% {
+                opacity: 0.5;
+            }
+            100% {
+                transform: translateY(-800px) translateX(100px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        .particle {
+            position: fixed;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        /* Shake suave para el botón NO */
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+        }
+
+        .shake {
+            animation: shake 0.3s ease-in-out;
+        }
+
+        /* Glow effect */
+        .glow {
+            box-shadow: 0 0 20px rgba(255, 107, 157, 0.6),
+                        0 0 40px rgba(255, 107, 157, 0.4),
+                        0 0 60px rgba(255, 107, 157, 0.2);
+        }
+    </style>
+</head>
+<body class="animated-gradient min-h-screen">
+    <!-- Contenedor de partículas -->
+    <div id="particles"></div>
+    
+    <div id="app" style="position: relative; z-index: 10;"></div>
+
+    <script>
+        let noClickCount = 0;
+        let showConfirmation = false;
+        let showInvitation = false;
+
+        // Crear corazones flotantes
+        function createFloatingHearts() {
+            setInterval(() => {
+                const heart = document.createElement('div');
+                heart.innerHTML = '❤️';
+                heart.className = 'heart-float';
+                heart.style.left = Math.random() * 100 + '%';
+                heart.style.fontSize = (Math.random() * 20 + 15) + 'px';
+                heart.style.animationDuration = (Math.random() * 5 + 5) + 's';
+                document.getElementById('particles').appendChild(heart);
+                
+                setTimeout(() => heart.remove(), 10000);
+            }, 800);
+        }
+
+        // Crear mancuernas flotantes
+        function createFloatingDumbbells() {
+            setInterval(() => {
+                const dumbbell = document.createElement('div');
+                dumbbell.innerHTML = '🏋️';
+                dumbbell.className = 'dumbbell-float';
+                dumbbell.style.left = Math.random() * 100 + '%';
+                dumbbell.style.top = Math.random() * 100 + '%';
+                dumbbell.style.fontSize = (Math.random() * 30 + 30) + 'px';
+                dumbbell.style.animationDelay = Math.random() * 2 + 's';
+                document.getElementById('particles').appendChild(dumbbell);
+                
+                setTimeout(() => dumbbell.remove(), 6000);
+            }, 1500);
+        }
+
+        // Crear partículas de estrellas
+        function createStarParticles() {
+            setInterval(() => {
+                const star = document.createElement('div');
+                star.innerHTML = '✨';
+                star.className = 'particle';
+                star.style.left = Math.random() * 100 + '%';
+                star.style.bottom = '0';
+                star.style.fontSize = (Math.random() * 15 + 10) + 'px';
+                star.style.animation = `particle-float ${Math.random() * 5 + 6}s linear`;
+                document.getElementById('particles').appendChild(star);
+                
+                setTimeout(() => star.remove(), 11000);
+            }, 1200);
+        }
+
+        function render() {
+            const app = document.getElementById('app');
+            
+            if (showInvitation) {
+                app.innerHTML = `
+                    <div class="min-h-screen flex items-center justify-center p-4">
+                        <div class="bg-white/95 backdrop-blur-sm rounded-3xl shadow-2xl p-8 max-w-md w-full text-center bounce-soft border-4 border-pink-400">
+                            <div class="flex justify-center mb-6">
+                                <div class="pulse-heart text-6xl">💪❤️</div>
+                            </div>
+                            <h1 class="text-4xl font-bold text-pink-600 mb-6" style="text-shadow: 2px 2px 4px rgba(255,107,157,0.3);">
+                                ¡Yo sabiaaaa: Invitada a Nuestra Cita de San Valentín! 💕
+                            </h1>
+                            <div class="space-y-4 text-left bg-gradient-to-br from-pink-100 to-red-100 p-6 rounded-2xl shadow-inner border-2 border-pink-300">
+                                <div class="flex items-start bg-white/70 p-3 rounded-lg">
+                                    <span class="font-bold text-pink-600 mr-2 text-xl">📍</span>
+                                    <div>
+                                        <span class="font-bold text-pink-600">Lugar:</span>
+                                        <span class="text-gray-800 ml-2">Tu casa</span>
+                                    </div>
+                                </div>
+                                <div class="flex items-start bg-white/70 p-3 rounded-lg">
+                                    <span class="font-bold text-pink-600 mr-2 text-xl">👗</span>
+                                    <div>
+                                        <span class="font-bold text-pink-600">Vestimenta:</span>
+                                        <span class="text-gray-800 ml-2">Lo mejor que tengas, que no parezcas oficinista</span>
+                                    </div>
+                                </div>
+                                <div class="flex items-start bg-white/70 p-3 rounded-lg">
+                                    <span class="font-bold text-pink-600 mr-2 text-xl">🕐</span>
+                                    <div>
+                                        <span class="font-bold text-pink-600">Hora:</span>
+                                        <span class="text-gray-800 ml-2">1:30</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="mt-6 text-5xl pulse-heart">
+                                🏋️‍♀️ ❤️ 🏋️‍♂️
+                            </div>
+                            <p class="mt-4 text-2xl text-pink-600 font-semibold" style="text-shadow: 1px 1px 2px rgba(0,0,0,0.1);">
+                                ¡Te espero, campeona! 💪❤️
+                            </p>
+                        </div>
+                    </div>
+                `;
+                return;
+            }
+
+            if (showConfirmation) {
+                app.innerHTML = `
+                    <div class="min-h-screen flex items-center justify-center p-4">
+                        <div class="bg-white/95 backdrop-blur-sm rounded-3xl shadow-2xl p-8 max-w-md w-full text-center border-4 border-pink-400">
+                            <div class="pulse-heart text-7xl mb-6">🏋️❤️🏋️</div>
+                            <h2 class="text-5xl font-bold text-pink-600 mb-8" style="text-shadow: 3px 3px 6px rgba(255,107,157,0.3);">
+                                ¿Estás segura? 💝
+                            </h2>
+                            <button
+                                onclick="handleYesClick()"
+                                class="bg-gradient-to-r from-pink-500 to-red-500 hover:from-pink-600 hover:to-red-600 text-white font-bold py-6 px-16 rounded-full text-3xl transform hover:scale-110 transition-all duration-300 shadow-2xl glow"
+                            >
+                                ¡SÍ, TOTALMENTE! ❤️💪
+                            </button>
+                        </div>
+                    </div>
+                `;
+                return;
+            }
+
+            const yesButtonSize = 120 + noClickCount * 35;
+            const noButtonSize = Math.max(70 - noClickCount * 6, 25);
+            const yesFontSize = Math.min(yesButtonSize / 5, 36);
+            const noFontSize = Math.max(noButtonSize / 5, 10);
+
+            let message = '';
+            if (noClickCount > 0) {
+                if (noClickCount < 3) {
+                    message = '¿Segura? Juntos entrenaremos mejor 🏋️💕';
+                } else if (noClickCount < 5) {
+                    message = '¡Vamos campeona, di que sí! 💪❤️';
+                } else {
+                    message = '¡Dale, seremos el mejor team! 🏋️‍♀️❤️🏋️‍♂️';
+                }
+            }
+
+            app.innerHTML = `
+                <div class="min-h-screen flex items-center justify-center p-4">
+                    <div class="bg-white/95 backdrop-blur-sm rounded-3xl shadow-2xl p-10 max-w-lg w-full text-center border-4 border-pink-400">
+                        <div class="flex justify-center mb-6 gap-4">
+                            <div class="pulse-heart text-6xl">🏋️</div>
+                            <div class="pulse-heart text-6xl" style="animation-delay: 0.5s;">❤️</div>
+                            <div class="pulse-heart text-6xl" style="animation-delay: 1s;">🏋️</div>
+                        </div>
+                        <h1 class="text-4xl md:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-pink-600 to-red-600 mb-4" style="text-shadow: 2px 2px 4px rgba(255,107,157,0.2);">
+                            Sofía, ¿quieres ser mi San Valentín? 💕
+                        </h1>
+                        <p class="text-lg text-gray-700 mb-8 font-semibold">
+                            Entrenaremos juntos... ¡el amor! 💪❤️
+                        </p>
+                        
+                        <div class="flex flex-col items-center gap-8">
+                            <button
+                                onclick="handleYesClick()"
+                                style="width: ${yesButtonSize}px; height: ${yesButtonSize}px; font-size: ${yesFontSize}px;"
+                                class="bg-gradient-to-br from-green-400 to-green-600 hover:from-green-500 hover:to-green-700 text-white font-bold rounded-full transform hover:scale-110 transition-all duration-300 shadow-2xl flex items-center justify-center glow"
+                            >
+                                ¡SÍ! 💪❤️
+                            </button>
+                            
+                            <button
+                                id="noButton"
+                                onclick="handleNoClick()"
+                                style="width: ${noButtonSize}px; height: ${noButtonSize}px; font-size: ${noFontSize}px;"
+                                class="bg-gradient-to-br from-gray-400 to-gray-600 hover:from-gray-500 hover:to-gray-700 text-white font-bold rounded-full transition-all duration-300 shadow-lg flex items-center justify-center"
+                            >
+                                No
+                            </button>
+                        </div>
+                        
+                        ${message ? `
+                            <div class="mt-8 bg-gradient-to-r from-pink-100 to-red-100 p-4 rounded-2xl border-2 border-pink-300">
+                                <p class="text-pink-600 font-bold text-xl pulse-heart">${message}</p>
+                            </div>
+                        ` : ''}
+                        
+                        <div class="mt-8 flex justify-center gap-3 text-4xl">
+                            <span class="bounce-soft" style="animation-delay: 0s;">💕</span>
+                            <span class="bounce-soft" style="animation-delay: 0.2s;">🏋️</span>
+                            <span class="bounce-soft" style="animation-delay: 0.4s;">💪</span>
+                            <span class="bounce-soft" style="animation-delay: 0.6s;">❤️</span>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function handleNoClick() {
+            const noButton = document.getElementById('noButton');
+            if (noButton) {
+                noButton.classList.add('shake');
+                setTimeout(() => noButton.classList.remove('shake'), 300);
+            }
+            noClickCount++;
+            render();
+        }
+
+        function handleYesClick() {
+            if (!showConfirmation) {
+                showConfirmation = true;
+            } else {
+                showInvitation = true;
+            }
+            render();
+        }
+
+        // Inicializar animaciones
+        createFloatingHearts();
+        createFloatingDumbbells();
+        createStarParticles();
+
+        // Renderizar la aplicación inicial
+        render();
+    </script>
+</body>
+</html>
